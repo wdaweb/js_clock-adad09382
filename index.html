@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>簡易時鐘</title>
+
+    <style>
+      @font-face {
+        font-family: "DSDIGII";
+        src: url("./font/DS-DIGII.TTF") format("truetype");
+      }
+      body {
+        overflow: hidden;
+        margin: 0;
+        font-family: "DSDIGII", sans-serif;
+      }
+      #bg {
+        background: url("img/sun.png");
+        width: 100vw;
+        height: 100vh;
+        background-repeat: no-repeat;
+        background-size: 100vw 100vh;
+        position: relative;
+      }
+      #clock {
+        width: 30rem;
+        position: absolute;
+        font-size: 5rem;
+        text-align: center;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      #cat {
+        width: 256px;
+        height: 256px;
+        position: absolute;
+        top: 65%;
+        left: 0%;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+  </head>
+  <body>
+    <div id="bg">
+      <div id="clock">
+        <span id="hour">0</span> <span id="min">0</span> <span id="sec">0</span>
+      </div>
+      <img id="cat" src="./img/cat_walk.gif" alt="" />
+    </div>
+
+    <script>
+      let hour = document.getElementById("hour");
+      let min = document.getElementById("min");
+      let sec = document.getElementById("sec");
+      let cat = document.getElementById("cat");
+      let bg = document.getElementById("bg");
+      let isNight = false;
+      let left = 1;
+      let now = new Date();
+      //初始判斷白天黑夜
+      if (now.getHours() <= 18 || now.getHours() >= 7) {
+        bg.style.backgroundImage = 'url("./img/sun.png")';
+      } else {
+        isNight = true;
+        clock.style.color = "#fff";
+        bg.style.backgroundImage = 'url("./img/night.png")';
+      }
+      //時鐘運轉
+      hour.innerText = String(now.getHours()).padStart(2, "0") + ":";
+      min.innerText = String(now.getMinutes()).padStart(2, "0") + ":";
+      sec.innerText = String(now.getSeconds()).padStart(2, "0");
+      let timer = setInterval(() => {
+        let now = new Date();
+        hour.innerText = String(now.getHours()).padStart(2, "0") + ":";
+        min.innerText = String(now.getMinutes()).padStart(2, "0") + ":";
+        sec.innerText = String(now.getSeconds()).padStart(2, "0");
+
+        console.log("經過了一秒");
+
+        //背景更改
+        if (now.getHours() > 18 || (now.getHours() < 7 && !isNight)) {
+          // 背景改為晚上
+          isNight = true;
+          clock.style.color = "#fff";
+          console.log("動畫改為夜晚");
+
+          // 新增下沉動畫
+          bg.classList.add("animate__animated");
+          bg.classList.add("animate__fadeOutDownBig");
+          setTimeout(() => {
+            //更改背景圖
+            bg.style.backgroundImage = 'url("./img/night.png")';
+
+            //增加上浮動畫並移除下沉動畫
+            bg.classList.add("animate__fadeInUpBig");
+            bg.classList.remove("animate__fadeOutDownBig");
+          }, 500);
+        } else if ((now.getHours() <= 18 || now.getHours() >= 7) && isNight) {
+          console.log("換回去");
+          // 背景改為白天
+          console.log("動畫改為白天");
+          isNight = false;
+          clock.style.color = "#000";
+          // 新增下沉動畫
+          bg.classList.add("animate__animated");
+          bg.classList.add("animate__fadeOutDownBig");
+          setTimeout(() => {
+            //更改背景圖
+            bg.style.backgroundImage = 'url("./img/sun.png")';
+
+            //增加上浮動畫並移除下沉動畫
+            bg.classList.add("animate__fadeInUpBig");
+            bg.classList.remove("animate__fadeOutDownBig");
+          }, 500);
+          console.log("是否為黑夜狀態為：" + isNight);
+        }
+      }, 1000);
+
+      let catMove = setInterval(() => {
+        left += 0.25;
+        cat.style.left = `${left}% `;
+        if (left == 100) {
+          left = -20;
+        }
+      }, 50);
+    </script>
+  </body>
+</html>
