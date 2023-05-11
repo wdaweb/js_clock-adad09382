@@ -4,8 +4,8 @@
 
 ### 平時的視覺效果
 
-![img]()
+![img](https://github.com/wdaweb/js_clock-adad09382/blob/master/img/READMEIMG_Walking.gif)
 
 ### 切換動畫時的視覺效果
 
-![img]()
+![img](https://github.com/wdaweb/js_clock-adad09382/blob/master/img/READMEIMG_Change.gif)
