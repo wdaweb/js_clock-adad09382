@@ -64,11 +64,15 @@
       let left = 1;
       let now = new Date();
       //初始判斷白天黑夜
-      if (now.getHours() <= 18 || now.getHours() >= 7) {
+      if (now.getHours() <= 18 && now.getHours() >= 7) {
+        console.log(now.getHours(), "這時間介於上午7-18點");
+        console.log("背景是白天");
         bg.style.backgroundImage = 'url("./img/sun.png")';
       } else {
         isNight = true;
         clock.style.color = "#fff";
+        console.log(now.getHours(), "這時間介於下午18 - 7點");
+        console.log("背景是晚上");
         bg.style.backgroundImage = 'url("./img/night.png")';
       }
       //時鐘運轉
@@ -84,7 +88,7 @@
         console.log("經過了一秒");
 
         //背景更改
-        if (now.getHours() > 18 || (now.getHours() < 7 && !isNight)) {
+        if (now.getHours() > 18 && now.getHours() < 7 && !isNight) {
           // 背景改為晚上
           isNight = true;
           clock.style.color = "#fff";
@@ -101,7 +105,7 @@
             bg.classList.add("animate__fadeInUpBig");
             bg.classList.remove("animate__fadeOutDownBig");
           }, 500);
-        } else if ((now.getHours() <= 18 || now.getHours() >= 7) && isNight) {
+        } else if (now.getHours() <= 18 && now.getHours() >= 7 && isNight) {
           console.log("換回去");
           // 背景改為白天
           console.log("動畫改為白天");
